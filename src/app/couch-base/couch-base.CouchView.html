@@ -1,0 +1,28 @@
+
+ <h2>componenet HTML Start</h2>
+ <p>Title1: {{title1}}</p>
+ <p>Title2: {{title2}}</p>
+ <p> Rows: {{_Total_Rows}}</p>
+ <p> Offset: {{_Offset}}</p>
+ 
+  <table>
+  <tr>
+    <th>id</th>
+    <th>date</th>
+     <th>Venue</th>   
+  </tr>
+  <tr *ngFor="let x of this.ConcertView | async">
+    <td>{{x.id}}</td>
+    <td>{{x.value.Date}}</td>
+    <td>{{x.value.Venue}}</td>
+  </tr>
+</table>
+
+
+
+
+
+
+<h2>componenet HTML Stop</h2>
+  
+
