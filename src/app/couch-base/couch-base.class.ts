@@ -14,7 +14,6 @@ export class couchBaseRow{
     this.key=_key;
   }
 }
-
 export class couchBaseRowKeyBase{
  public _id : string;
  public _rev : string;
@@ -23,8 +22,6 @@ export class couchBaseRowKeyBase{
    this._rev =rev;
  }
 }
-
-
 export class couchBaseRow2 extends couchBaseRowKeyBase {
   public  id: string;
  constructor(superID : string,rev : string,myID : string){
@@ -32,7 +29,6 @@ export class couchBaseRow2 extends couchBaseRowKeyBase {
     this.id=myID;
   } 
 }
-
 export class Concert2 extends couchBaseRow2 {
   public Concert :  ConcertDetail ;
   public Songs : Array<SongDetail>;
@@ -42,7 +38,6 @@ export class Concert2 extends couchBaseRow2 {
     this.Songs=_Song;
   }
 }
-
 export class ConcertView extends couchBaseView {
     public rows : Array<Concert2>;
     constructor(_total_rows : number, _offset : number,_rows :Array<Concert2> ){
@@ -50,8 +45,6 @@ export class ConcertView extends couchBaseView {
       this.rows=_rows;
     }
 }   
-
-
 export class Concert extends couchBaseRow {
   public Concert :  ConcertDetail ;
   public Song : Array<SongDetail>;
@@ -61,7 +54,6 @@ export class Concert extends couchBaseRow {
     this.Song=_Song;
   }
 }
-
 export class ConcertDetail {
   public Date: string;
   public Venue: string;
@@ -78,14 +70,24 @@ export class ConcertDetail {
         this.SB=sb;
     }
 }
-
-
-
-
 export class SongDetail{
   public IASongKey : string;
   public Track: string;
   public Title: string;
   public Time: string;
   public SongID : string;
+}
+export class TrackElement{
+    public track : string;
+    public name : string;
+    public length : string;
+    public file : string;
+    public seconds : number;
+    constructor(_track : string,_name : string, _lengthPacked : string,_ArchiveBase : string, _ConcertBase : string, _FileFull : string){
+      this.track=_track;
+      this.name=_name;
+      this.length=_lengthPacked.substring(0,_lengthPacked.length-2)+":"+_lengthPacked.substring(_lengthPacked.length - 2);
+      this.file=_ArchiveBase+"/"+_ConcertBase+"/"+_FileFull;
+      this.seconds=(Number(_lengthPacked.substring(0,_lengthPacked.length-2)) * 60)+Number(_lengthPacked.substring(_lengthPacked.length - 2));
+    }
 }
