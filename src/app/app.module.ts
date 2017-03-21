@@ -7,20 +7,19 @@ import { AppComponent } from './app.component';
 import { CouchBaseModule } from './couch-base/couch-base.module';
 import { ConcertAllComponent} from './couch-base/concert-all/concert-all.component';
 import { ConcertAllService} from './couch-base/concert-all.service';
-import {AudioPlayerComponenet} from './audio-player/audio-player.component';
+import {PlayerService} from './audio-player/audio-player.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ConcertAllComponent,
-    AudioPlayerComponenet
+    ConcertAllComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [ConcertAllService],
+  providers: [ConcertAllService,PlayerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

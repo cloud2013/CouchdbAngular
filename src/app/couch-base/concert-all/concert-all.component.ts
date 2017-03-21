@@ -7,7 +7,7 @@ import { Concert2 } from '../couch-base.class';
 import { ConcertView } from '../couch-base.class';
 import { SongDetail } from '../couch-base.class';
 import {TrackElement} from '../couch-base.class';
-import {AudioPlayerComponenet} from '../../audio-player/audio-player.component';
+
 import {PlayerService} from '../../audio-player/audio-player.service';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
@@ -41,6 +41,7 @@ export class ConcertAllComponent implements OnInit {
   constructor(private service: ConcertAllService, private _playerService: PlayerService) {this.trackSelected=false;  }
 
    onPlay(){
+     
     this._playerService.setPlayer(this.song);
     this._playerService.play();
    }
@@ -81,15 +82,20 @@ onNextTrack(){
 
      this.trackName=track.name;
      this.song=track;
-    }
+this.onPlay();
+    
+  
+
+}
 
     onNext(track : TrackElement): void{ 
      
      this.trackSelected=true;
-  //   alert("concert-all::OnNext. Selected Track: "+track.name);
+    
      this.trackName=track.name;
      this.song=track;
      this.onNextCalled=true;
+     this.onPlay();
     }
 
 onSelect(concert :Concert2 ): void {
@@ -99,8 +105,10 @@ onSelect(concert :Concert2 ): void {
       let element : TrackElement=new TrackElement(obj.Track,obj.Title,obj.Time,'http://www.archive.org/download',concert.Concert.IAConcertKey,obj.IASongKey);
       this.selectTrackArray.push(element);
   });
-  this.trackName=null;
-  this.song=null;
+
+  this.trackName=this.selectTrackArray[0].name;
+  this.song=this.selectTrackArray[0];
+  this.onPlay();
 
 }
 ngOnInit() {

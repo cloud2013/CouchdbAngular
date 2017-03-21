@@ -1,4 +1,4 @@
-import { Component, OnInit,OnDestroy,Renderer, Inject,ViewChild, ElementRef, Directive , Input} from '@angular/core';
+/*import { Component, OnInit,OnDestroy,Renderer, Inject,ViewChild, ElementRef, Directive , Input} from '@angular/core';
 import { Subscription }   from 'rxjs/Subscription';
 import { Subject }    from 'rxjs/Subject';
 import {PlayerService} from './audio-player.service';
@@ -80,3 +80,4 @@ export class AudioPlayerComponenet implements OnInit {
   }
 }
 
+*/
