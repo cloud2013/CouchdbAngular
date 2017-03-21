@@ -19,7 +19,7 @@ import 'rxjs/add/operator/switchMap';
   selector: 'concert-all',
   templateUrl: './concert-all.component.html',
   styleUrls: ['./concert-all.component.css'],
-  providers: [ConcertAllService]
+  providers: [ConcertAllService,PlayerService]
 })
 
 
@@ -28,35 +28,70 @@ export class ConcertAllComponent implements OnInit {
    Concerts: Observable<Concert2 []>
    title1 = 'Down To the Very Big Deal!';
    title2 ="Concerts and Songs" ;
-  public total_rows  :   number ;
-  public offset : number;
-  public trackSelected : boolean;
-  public trackName : string;
-  public trackObject : TrackElement;
-  public audioComponenet : AudioPlayerComponenet;
-  public playerService : PlayerService;
-  selectConcert : Concert2;
-  selectSongs : Array<SongDetail>;
-  selectTrackArray : Array<TrackElement>; 
-  constructor(private service: ConcertAllService) {
+   selectConcert : Concert2;
+   selectSongs : Array<SongDetail>;
+   song: TrackElement;
+   private onNextCalled : boolean = false;
+   public total_rows  :   number ;
+   public offset : number;
+   public trackSelected : boolean;
+   public trackName : string;
+   public selectTrackArray : Array<TrackElement>; 
+ 
+  constructor(private service: ConcertAllService, private _playerService: PlayerService) {this.trackSelected=false;  }
 
-    this.trackSelected=false;
+   onPlay(){
+    this._playerService.setPlayer(this.song);
+    this._playerService.play();
    }
-    
+
+onNextTrack(){
+  if (!this.song){
+    let t : number = 0;
+    if (this.selectTrackArray)
+    {
+      this.song = this.selectTrackArray[t];
+      this.onNext(this.song);
+      this.onPlay();
+    }
+    return;
+  }
+  let nextTrack : number  = Number( this.song.track); //this is the track number = offset of next track
+  if (nextTrack == this.selectTrackArray.length){
+            nextTrack=0;
+    }
+      this.song = this.selectTrackArray[nextTrack];
+      this.onNext(this.song);
+      this.onPlay();
+  }
+  
+  onStop(){
+    this._playerService.pause();
+  }
+  onShow(){
+    alert(" Track: "+this.song.name+ " Track Number: " +this.song.track + " Time: "+this.song.length);
+  }
+
   onSelectTrack(track : TrackElement): void{ 
+     if (this.onNextCalled){
+       this.onNextCalled=false;
+       return;
+     }
+     this.trackSelected=true;
+
+     this.trackName=track.name;
+     this.song=track;
+    }
+
+    onNext(track : TrackElement): void{ 
      
      this.trackSelected=true;
+  //   alert("concert-all::OnNext. Selected Track: "+track.name);
      this.trackName=track.name;
-     this.trackObject=track;
-     
-    //  let sTrack=new Subject<TrackElement>();
-    //  sTrack.map(data => data = track);
-    //  this.playerService=new PlayerService();
-    //  this.playerService.song=sTrack;
-    //  this.audioComponenet=new AudioPlayerComponenet(this.playerService   );
-    //  this.audioComponenet.toggleAudio();
-     
+     this.song=track;
+     this.onNextCalled=true;
     }
+
 onSelect(concert :Concert2 ): void {
   this.selectConcert=concert;
   this.selectTrackArray = new Array<TrackElement>();
@@ -64,12 +99,11 @@ onSelect(concert :Concert2 ): void {
       let element : TrackElement=new TrackElement(obj.Track,obj.Title,obj.Time,'http://www.archive.org/download',concert.Concert.IAConcertKey,obj.IASongKey);
       this.selectTrackArray.push(element);
   });
-   
+  this.trackName=null;
+  this.song=null;
+
 }
-
-
-
-  ngOnInit() {
+ngOnInit() {
 
  let data =this.service.get()
        .catch(error => 
@@ -82,6 +116,7 @@ onSelect(concert :Concert2 ): void {
     this.Concerts=data.map(object => object.rows);
     data.map( object => object.total_rows).subscribe(val => this.total_rows  = val);
     data.map( object => object.offset).subscribe(val => this.offset = val);
+    this._playerService.endEvent.subscribe(t => this.onNextTrack());
    
   }
 }

@@ -1,33 +1,32 @@
 <h2>concert-all.componenet Start</h2>
- <p>Title1: {{title1}}</p>
- <p>Title2: {{title2}}</p>
+ <p>{{title1}}</p>
+ <p>{{title2}}</p>
  <p> Rows: {{total_rows}}</p>
  <p> Offset: {{offset}}</p>
  
-
-<!--<div *ngIf="trackSelected">
-    <h1>Track Selected: {{trackName}} </h1>
-  <button id="play">Play</button> 
-   <button id="stop">Stop</button>
-   
- <audio-player>[track]="track"</audio-player>
-</div>-->
-
-
 <div *ngIf="selectConcert">
   <h2>Concert Details</h2>
    <div>
     <span>{{selectConcert.Concert.Date.substring(0,4)}}-{{selectConcert.Concert.Date.substring(4,6)}}-{{selectConcert.Concert.Date.substring(6,8)}} * {{selectConcert.Concert.Venue}}</span>
-<ul id="playlist">
+  <div *ngIf="song">
+    <span>{{song.name}}</span>
+   <button id="play" (click)=onPlay() >Play</button> 
+   <button id="stop" (click)=onStop() >Stop</button>
+   <button id="toggle" (click)=onToggle() >Toggle</button>
+   <button id="showTrack" (click)=onShow() >Info</button>
+   <button id="Next" (click)=onNextTrack() >Next</button>
+  </div>
+
+     <ul id="playlist">
          <li *ngFor="let track of selectTrackArray    " (click)=onSelectTrack(track) >
          <span>{{track.track}} - {{track.length.substring(0,track.length.length-2)+":"+track.length.substring(track.length.length - 2)}} - {{track.name}}
-     <div *ngIf="trackSelected && trackName==track.name  "   >
-       <audio-player   [trackElement]="track" ></audio-player>
-    </div>
-    </span> 
-     </li>
-</ul>
-   </div>
+            <div *ngIf="trackSelected && trackName==track.name  "   >
+              <!--<audio-player   [ClickedTrack]="track"  [ClickedTracks]="selectTrackArray"  [parent]="this"    ></audio-player>;-->
+            </div>
+        </span> 
+        </li>
+    </ul>
+  </div>
 </div>
 <h1>-----------------------------------------</h1>
 <h2> Concert Listings </h2>
