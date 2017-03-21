@@ -1,4 +1,5 @@
 import { Component, OnInit,Renderer, Inject,ViewChild, ElementRef, Directive , Input} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -7,6 +8,7 @@ import { Concert2 } from '../couch-base.class';
 import { ConcertView } from '../couch-base.class';
 import { SongDetail } from '../couch-base.class';
 import {TrackElement} from '../couch-base.class';
+import {ByYearFilterPipe} from './concert-all.pipe';
 
 import {PlayerService} from '../../audio-player/audio-player.service';
 import 'rxjs/add/observable/of';
@@ -17,6 +19,7 @@ import 'rxjs/add/operator/switchMap';
  
 @Component({
   selector: 'concert-all',
+ //pipes: [ByYearFilterPipe],
   templateUrl: './concert-all.component.html',
   styleUrls: ['./concert-all.component.css'],
   providers: [ConcertAllService,PlayerService]
@@ -26,11 +29,11 @@ import 'rxjs/add/operator/switchMap';
 export class ConcertAllComponent implements OnInit {
     
    Concerts: Observable<Concert2 []>
-   title1 = 'Down To the Very Big Deal!';
-   title2 ="Concerts and Songs" ;
+   title1 = 'Ladies and Gentlemen...The Grateful Dead';
    selectConcert : Concert2;
    selectSongs : Array<SongDetail>;
    song: TrackElement;
+   filterText : string;
    private onNextCalled : boolean = false;
    public total_rows  :   number ;
    public offset : number;

@@ -27,7 +27,7 @@ export class PlayerService {
       );*/
     };
     this.audio.onended = () => {
-         alert(song.name + " as Ended");
+         //alert(song.name + " as Ended");
          this.endEvent.next(true);
     };
   }

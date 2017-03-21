@@ -1,15 +1,11 @@
-<h2>concert-all.componenet Start</h2>
- <p>{{title1}}</p>
- <p>{{title2}}</p>
- <p> Rows: {{total_rows}}</p>
- <p> Offset: {{offset}}</p>
- 
+ <h2><p>{{title1}}</p></h2>
+ <p> Concerts: {{total_rows}}</p>
 <div *ngIf="selectConcert">
-  <h2>Concert Details</h2>
+  <h3>Active Concert</h3>
    <div>
-    <span>{{selectConcert.Concert.Date.substring(0,4)}}-{{selectConcert.Concert.Date.substring(4,6)}}-{{selectConcert.Concert.Date.substring(6,8)}} * {{selectConcert.Concert.Venue}}</span>
+    <span>{{selectConcert.Concert.Date.substring(0,4)}}-{{selectConcert.Concert.Date.substring(4,6)}}-{{selectConcert.Concert.Date.substring(6,8)}} {{selectConcert.Concert.Venue}}</span>
   <div *ngIf="song">
-    <span>{{song.name}}</span>
+    <span>Acitve Song: {{song.name}}</span>
    <button id="play" (click)=onPlay() >Play</button> 
    <button id="stop" (click)=onStop() >Stop</button>
    <button id="toggle" (click)=onToggle() >Toggle</button>
@@ -20,19 +16,31 @@
      <ul id="playlist">
          <li *ngFor="let track of selectTrackArray    " (click)=onSelectTrack(track) >
          <span>{{track.track}} - {{track.length.substring(0,track.length.length-2)+":"+track.length.substring(track.length.length - 2)}} - {{track.name}}
-            <div *ngIf="trackSelected && trackName==track.name  "   >
-              <!--<audio-player   [ClickedTrack]="track"  [ClickedTracks]="selectTrackArray"  [parent]="this"    ></audio-player>;-->
-            </div>
         </span> 
         </li>
     </ul>
   </div>
 </div>
-<h1>-----------------------------------------</h1>
-<h2> Concert Listings </h2>
- <li *ngFor="let x of this.Concerts  | async  "  (click)="onSelect(x.key)">
-  <span >{{x.key.Concert.Date}} - {{x.key.Concert.Venue}} - {{x.key.Songs.length}}</span>  
-</li>
+
+<input type="text" placeHolder="filter Year" [(ngModel)]= "filterText">
+ <table class="table">
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Venue</th> 
+                        <th>Tracks</th>
+                    </tr>
+                    <tr *ngFor="let x of this.Concerts |  async | paginate: {itemsPerPage: 15, currentPage:page, id: '1'}; let i = index"    (click)="onSelect(x.key)">
+                        <td>{{i + 1}}</td>
+                        <td>{{x.key.Concert.Date}}</td>
+                        <td>{{x.key.Concert.Venue}}</td>
+                        <td>{{x.key.Songs.length}}</td>
+                    </tr>
+                </table>
+                <pagination-controls (pageChange)="page = $event" id="1"
+                      maxSize="5"
+                      directionLinks="true"
+                      autoHide="true">
+                </pagination-controls>
 
 
-<h2>concert-all.componenet End</h2>
