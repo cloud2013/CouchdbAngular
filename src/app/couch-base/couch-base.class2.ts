@@ -1,3 +1,48 @@
+export class couchdbPayLoadClass{
+    public total_rows : number;
+    public offset : number;
+    public rows : Array<couchdbRowClass>;
+}
+
+export class couchdbRowClass{
+    public id : string;
+    public key : couchdbKeyClass;
+}
+export class couchdbKeyClass{
+    public _id : string;
+    public _rev : string;
+     public Concert : couchdbConcert;
+    public Songs : Array<couchdbSong>;
+}
+
+export class couchdbConcert {
+  public Date: string;
+  public Venue: string;
+  public IAConcertKey: string;
+  public SB : boolean;
+  public MX : boolean;
+  public CM : boolean;
+  public _id : string;
+  constructor(_date: string,_Venue: string, iaConcertKey : string , sb:boolean,mx:boolean,cm: boolean, id : string ) {
+        this.Date=_date;
+        this.Venue=_Venue;
+        this.CM=cm;
+        this.IAConcertKey=iaConcertKey;
+        this.MX=mx;
+        this.SB=sb;
+        this._id=id;
+    }
+}
+
+export class couchdbSong{
+  public IASongKey : string;
+  public Track: string;
+  public Title: string;
+  public Time: string;
+  public SongID : string;
+}
+
+
 
 // export class couchBaseView{
 //     public total_rows : number;
