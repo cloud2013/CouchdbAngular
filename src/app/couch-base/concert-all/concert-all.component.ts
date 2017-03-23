@@ -34,7 +34,7 @@ export class ConcertAllComponent implements OnInit {
    selectSongs : Array<SongDetail>;
    song: TrackElement;
    yearText : string;
-   mmddText : string;
+   mmddText : string;//=this.getMMDD();
    private onNextCalled : boolean = false;
    public total_rows  :   number ;
    public offset : number;
@@ -127,6 +127,7 @@ this.onPlay();
     }
 
 onSelect(concert :Concert2 ): void {
+   
   this.selectConcert=concert;
   this.selectTrackArray = new Array<TrackElement>();
   concert.Songs.forEach( obj => {
@@ -153,7 +154,8 @@ ngOnInit() {
     data.map( object => object.total_rows).subscribe(val => this.total_rows  = val);
     data.map( object => object.offset).subscribe(val => this.offset = val);
     this._playerService.endEvent.subscribe(t => this.onNextTrack());
-    //this.mmddText=this.getMMDD();
+    
+    //this.onSelect( this.Concerts[0]);
   }
 }
 
