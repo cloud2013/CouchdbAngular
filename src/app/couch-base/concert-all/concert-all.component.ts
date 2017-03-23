@@ -8,7 +8,7 @@ import { Concert2 } from '../couch-base.class';
 import { ConcertView } from '../couch-base.class';
 import { SongDetail } from '../couch-base.class';
 import {TrackElement} from '../couch-base.class';
-import {ByYearFilterPipe} from './concert-all.pipe';
+
 
 import {PlayerService} from '../../audio-player/audio-player.service';
 import 'rxjs/add/observable/of';
@@ -33,7 +33,8 @@ export class ConcertAllComponent implements OnInit {
    selectConcert : Concert2;
    selectSongs : Array<SongDetail>;
    song: TrackElement;
-   filterText : string;
+   yearText : string;
+   mmddText : string;
    private onNextCalled : boolean = false;
    public total_rows  :   number ;
    public offset : number;
@@ -43,6 +44,30 @@ export class ConcertAllComponent implements OnInit {
  
   constructor(private service: ConcertAllService, private _playerService: PlayerService) {this.trackSelected=false;  }
 
+  getMMDD() : string  {
+
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    var DD : string;
+    var MM : string;
+  
+    DD=dd.toString();
+    if(dd<10) {
+      DD='0'+dd;
+    } 
+    MM=mm.toString();
+    if(mm<10) {
+      MM='0'+mm
+    } 
+ 
+  return MM+DD;
+  }
+
+   onToggle(){
+     this._playerService.toggleAudio();
+   }
    onPlay(){
      
     this._playerService.setPlayer(this.song);
@@ -128,7 +153,7 @@ ngOnInit() {
     data.map( object => object.total_rows).subscribe(val => this.total_rows  = val);
     data.map( object => object.offset).subscribe(val => this.offset = val);
     this._playerService.endEvent.subscribe(t => this.onNextTrack());
-   
+    //this.mmddText=this.getMMDD();
   }
 }
 
