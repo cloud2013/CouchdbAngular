@@ -13,6 +13,7 @@ export class PlayerService {
     this.audio = new Audio();
   }
   setPlayer(song: TrackElement) {
+    //alert("setPlayer: " +song.name);
     this.song.next(song);
     this.audio.src = song.file;
     this.audio.oncanplaythrough = () => {
@@ -21,11 +22,11 @@ export class PlayerService {
         this.audio.duration
       );*/
     };
-    this.audio.ontimeupdate = () => {
-      /*this.currentTime.next(
-        this.audio.currentTime
-      );*/
-    };
+    // this.audio.ontimeupdate = () => {
+    //   /*this.currentTime.next(
+    //     this.audio.currentTime
+    //   );*/
+    // };
     this.audio.onended = () => {
          //alert(song.name + " as Ended");
          this.endEvent.next(true);

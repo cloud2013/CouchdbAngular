@@ -15,6 +15,9 @@ export class SuperFilterPipe implements PipeTransform {
   }
 
   transform(concerts: Array< couchdbRowClass> , YYYY : string,MMDD : string) {
+    if (concerts===null){
+        return null;
+    }
     let transformType : string="";
     
     if ( this.check(YYYY) ){

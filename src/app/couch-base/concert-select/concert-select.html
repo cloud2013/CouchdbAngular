@@ -1,0 +1,27 @@
+                 <div>
+                    <span>{{selectConcert.Concert.Date.substring(0,4)+"-"+selectConcert.Concert.Date.substring(4,6)+"-"+selectConcert.Concert.Date.substring(6,8)}} At {{selectConcert.Concert.Venue}} [ {{selectConcert.Songs.length}} Tracks ] </span>
+                    <div *ngIf="song" class="AudioButtonsDiv">
+                        <span>Acitve Song: {{song.name}} Time: {{song.length}}  ( Seconds: {{song.seconds}} )</span>
+                        <p>
+                        <button id="play" (click)=onPlay() >Play</button> 
+                        <button id="stop" (click)=onStop() >Stop</button>
+                        <button id="toggle" (click)=onToggle() >Toggle</button>
+                        <button id="showTrack" (click)=onShow() >Info</button>
+                        <button id="Next" (click)=onNextTrack() >Next</button>
+                        </p>
+                    </div>
+                </div>
+                <!--SongList-->
+                <table class="SongListTable">
+                    <tr>
+                        <th>Track</th>
+                        <th>Length</th>
+                        <th>Title</th>
+                    </tr>
+                    <tr  *ngFor="let track of selectTrackArray    " (click)=onSelectTrack(track) >
+                        <th>{{track.track}}</th>
+                        <th>{{track.length}}</th>
+                        <th>{{track.name}}</th>
+                    </tr>
+                </table>
+ 
