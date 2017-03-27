@@ -35,7 +35,6 @@ export class ConcertAllComponent implements OnInit {
    song: TrackElement;
    yearText : string;
    mmddText : string;
-   //private onNextCalled : boolean = false;
    public total_rows  :   number ;
    public offset : number;
    public trackSelected : boolean;
@@ -67,7 +66,9 @@ export class ConcertAllComponent implements OnInit {
   }
 
 onSelect(concert :Concert2 ): void {
-   
+  if (this._playerService.isOn){
+    this._playerService.pause(); 
+  }
   this.selectConcert=concert;
   this.selectTrackArray = new Array<TrackElement>();
   concert.Songs.forEach( obj => {
@@ -79,11 +80,12 @@ this.song=this.selectTrackArray[0];
 this.onPlay();
 }
 onPlay(){
-     //alert(this.song.name);
-     
+    if (this._playerService.isOn())
+    {
+        this._playerService.pause();
+    } 
     this._playerService.setPlayer(this.song);
-    //this._playerService.play();
-   }
+    }
 
  onToggle(){
      this._playerService.toggleAudio();

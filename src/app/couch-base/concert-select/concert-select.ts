@@ -36,6 +36,7 @@ export class ConcertSelectComponent implements OnInit {
    public total_rows  :   number ;
    public offset : number;
    public trackSelected : boolean;
+   firstTime : boolean = true;
    @Input() public trackName : string;
    @Input() public selectTrackArray : Array<TrackElement>; 
  
@@ -48,16 +49,23 @@ export class ConcertSelectComponent implements OnInit {
      this._playerService.toggleAudio();
    }
    onPlay(){
-     
+     //console.log("concert-select::OnPlay");
     this._playerService.setPlayer(this.song);
-    
+    this._playerService.play();
    }
 onNextTrack(){
+  //console.log("concert-select::OnNextTrack");
+  if (this.firstTime){
+    this.firstTime=false;
+    //console.log("OnNextTrack Cancelled");
+    return;
+  }
   if (!this.song){
     let t : number = 0;
     if (this.selectTrackArray)
     {
       this.song = this.selectTrackArray[t];
+      //console.log("concert-select::OnNextTrack::calling onNextA");
       this.onNext(this.song);
       this.onPlay();
     }
@@ -68,6 +76,7 @@ onNextTrack(){
             nextTrack=0;
     }
       this.song = this.selectTrackArray[nextTrack];
+      //console.log("concert-select::OnNextTrack:::Calling OnNextB");
       this.onNext(this.song);
       this.onPlay();
   }
@@ -80,6 +89,7 @@ onNextTrack(){
   }
 
   onSelectTrack(track : TrackElement): void{ 
+    //console.log("concert-select::OnSelectTrack");
      if (this.onNextCalled){
        this.onNextCalled=false;
        return;
@@ -101,9 +111,13 @@ onNext(track : TrackElement): void{
     }
 
 
-ngOnInit() {
+ngOnInit() {}
+   
+
+  ngOnChanges(){
     this._playerService.endEvent.subscribe(t => this.onNextTrack());
     this.onPlay();
+    this.firstTime   = true;
   }
 }
 
