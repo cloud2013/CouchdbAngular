@@ -8,16 +8,14 @@ import { CouchBaseModule } from './couch-base/couch-base.module';
 import { ConcertAllComponent} from './couch-base/concert-all/concert-all.component';
 import { ConcertAllService} from './couch-base/concert-all.service';
 import {PlayerService} from './audio-player/audio-player.service';
-import {ByYearFilterPipe} from './couch-base/concert-all/concert-all.ByYearTransform';
-import {SuperFilterPipe} from './Utility/app-utility.pipe';
 import { ConcertSelectComponent } from './couch-base/concert-select/concert-select';
+import {ByDatePipe} from './couch-base/concert-all/concert-all.ByDateTransform';
 @NgModule({
   declarations: [
     AppComponent,
     ConcertAllComponent,
     ConcertSelectComponent,
-    ByYearFilterPipe,
-    SuperFilterPipe
+    ByDatePipe
   ],
   imports: [
     BrowserModule,

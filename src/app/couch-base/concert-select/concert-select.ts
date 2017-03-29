@@ -1,11 +1,10 @@
 import { Component, OnInit,Renderer, Inject,ViewChild, ElementRef, Directive , Input} from '@angular/core';
 import { Pipe, PipeTransform } from '@angular/core';
-import { Router } from '@angular/router';
+//import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+//import { Subject } from 'rxjs/Subject';
 import { ConcertAllService } from '../concert-all.service';
 import { Concert2 } from '../couch-base.class';
-import { ConcertView } from '../couch-base.class';
 import { SongDetail } from '../couch-base.class';
 import {TrackElement} from '../couch-base.class';
 

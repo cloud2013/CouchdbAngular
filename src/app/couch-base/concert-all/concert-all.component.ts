@@ -2,7 +2,8 @@ import { Component, OnInit,Renderer, Inject,ViewChild, ElementRef, Directive , I
 import { Pipe, PipeTransform } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+//import { Subject } from 'rxjs/Subject';
+
 import { ConcertAllService } from '../concert-all.service';
 import { Concert2 } from '../couch-base.class';
 import { ConcertView } from '../couch-base.class';
@@ -12,6 +13,7 @@ import {TrackElement} from '../couch-base.class';
 
 import {PlayerService} from '../../audio-player/audio-player.service';
 import { ConcertSelectComponent } from '../concert-select/concert-select';
+
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
@@ -33,8 +35,7 @@ export class ConcertAllComponent implements OnInit {
    selectConcert : Concert2;
    selectSongs : Array<SongDetail>;
    song: TrackElement;
-   yearText : string;
-   mmddText : string;
+   filterText : string;
    public total_rows  :   number ;
    public offset : number;
    public trackSelected : boolean;
@@ -103,7 +104,7 @@ ngOnInit() {
     this.Concerts=data.map(object => object.rows);
     data.map( object => object.total_rows).subscribe(val => this.total_rows  = val);
     data.map( object => object.offset).subscribe(val => this.offset = val);
-    this.mmddText=this.getMMDD();
+    
   }
 }
 

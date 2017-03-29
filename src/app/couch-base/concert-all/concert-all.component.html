@@ -4,8 +4,7 @@
 <table>
     <tr>
          <td>
-            <input class="FilterInputInputText" type="text" placeHolder="Year" [(ngModel)]= "yearText">
-            <input class="FilterInputInputText" type="text" placeHolder="MMDD" [(ngModel)]= "mmddText">
+            <input class="FilterInputInputText" type="text" placeHolder="Year" [(ngModel)]= "filterText">
             <p>--------------------------------</p>
             <table class="ConcertListTable">
                 <tr>
@@ -14,7 +13,7 @@
                         <th>Venue</th> 
                         <th>Tracks</th>
                 </tr>
-                <tr *ngFor="let x of this.Concerts |  async |  couchdbSuperFilter:yearText:mmddText | paginate: {itemsPerPage: 25, currentPage:page, id: '1'}; let i = index"    (click)="onSelect(x.key)">
+                <tr *ngFor="let x of this.Concerts |  async |  byDatePipe:filterText | paginate: {itemsPerPage: 25, currentPage:page, id: '1'}; let i = index"    (click)="onSelect(x.key)">
                         <td>{{i + 1}}
                         </td>
                         <td>{{x.key.Concert.Date.substring(0,4)+"-"+x.key.Concert.Date.substring(4,6)+"-"+x.key.Concert.Date.substring(6,8)}}</td>
