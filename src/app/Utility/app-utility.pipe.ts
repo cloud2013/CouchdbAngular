@@ -9,6 +9,7 @@ export class SuperFilterPipe implements PipeTransform {
         return false;
       }
       if (arg === null) {
+          
         return false;
     }
     return true;

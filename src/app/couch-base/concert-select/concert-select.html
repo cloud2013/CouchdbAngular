@@ -1,7 +1,9 @@
                  <div>
                     <span>{{selectConcert.Concert.Date.substring(0,4)+"-"+selectConcert.Concert.Date.substring(4,6)+"-"+selectConcert.Concert.Date.substring(6,8)}} At {{selectConcert.Concert.Venue}} [ {{selectConcert.Songs.length}} Tracks ] </span>
                     <div *ngIf="song" class="AudioButtonsDiv">
-                        <span>Acitve Song: {{song.name}} Time: {{song.length}}  ( Seconds: {{song.seconds}} )</span>
+                        <span>Active: {{song.name}} Time: {{song.length}}  (Total: {{song.seconds}} Current: {{myTime}} )</span>
+                       
+                        <
                         <p>
                         <button id="play" (click)=onPlay() >Play</button> 
                         <button id="stop" (click)=onStop() >Stop</button>

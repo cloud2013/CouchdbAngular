@@ -67,6 +67,7 @@ export class ConcertAllComponent implements OnInit {
   }
 
 onSelect(concert :Concert2 ): void {
+  console.log("concert-all.components::onSelect");
   if (this._playerService.isOn){
     this._playerService.pause(); 
   }
@@ -81,6 +82,7 @@ this.song=this.selectTrackArray[0];
 this.onPlay();
 }
 onPlay(){
+  console.log("concert-all.components::onPlay - calls _playerService.setPlayer");
     if (this._playerService.isOn())
     {
         this._playerService.pause();
@@ -89,10 +91,11 @@ onPlay(){
     }
 
  onToggle(){
+   console.log("concert-all.components::onToggle");
      this._playerService.toggleAudio();
    }
 ngOnInit() {
-
+console.log("concert-all.components::ngOnInit");
  let data =this.service.get()
        .catch(error => 
       {

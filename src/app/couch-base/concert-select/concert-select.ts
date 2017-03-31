@@ -2,7 +2,7 @@ import { Component, OnInit,Renderer, Inject,ViewChild, ElementRef, Directive , I
 import { Pipe, PipeTransform } from '@angular/core';
 //import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-//import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs/Subject';
 import { ConcertAllService } from '../concert-all.service';
 import { Concert2 } from '../couch-base.class';
 import { SongDetail } from '../couch-base.class';
@@ -38,6 +38,7 @@ export class ConcertSelectComponent implements OnInit {
    firstTime : boolean = true;
    @Input() public trackName : string;
    @Input() public selectTrackArray : Array<TrackElement>; 
+   public myTime : string="000";
  
   constructor(private service: ConcertAllService, private _playerService: PlayerService) {
     
@@ -48,15 +49,14 @@ export class ConcertSelectComponent implements OnInit {
      this._playerService.toggleAudio();
    }
    onPlay(){
-     //console.log("concert-select::OnPlay");
+     console.log("concert-select.components::onPlay.");
     this._playerService.setPlayer(this.song);
     this._playerService.play();
    }
 onNextTrack(){
-  //console.log("concert-select::OnNextTrack");
+  console.log("concert-select.components::onNextTrack");
   if (this.firstTime){
     this.firstTime=false;
-    //console.log("OnNextTrack Cancelled");
     return;
   }
   if (!this.song){
@@ -64,7 +64,6 @@ onNextTrack(){
     if (this.selectTrackArray)
     {
       this.song = this.selectTrackArray[t];
-      //console.log("concert-select::OnNextTrack::calling onNextA");
       this.onNext(this.song);
       this.onPlay();
     }
@@ -88,7 +87,7 @@ onNextTrack(){
   }
 
   onSelectTrack(track : TrackElement): void{ 
-    //console.log("concert-select::OnSelectTrack");
+    console.log("concert-select.components::onSelectTrack");
      if (this.onNextCalled){
        this.onNextCalled=false;
        return;
@@ -100,7 +99,7 @@ onNextTrack(){
 this.onPlay();
 }
 onNext(track : TrackElement): void{ 
-     
+     console.log("concert-select.components::onNext");
      this.trackSelected=true;
     
      this.trackName=track.name;
@@ -117,6 +116,23 @@ ngOnInit() {}
     this._playerService.endEvent.subscribe(t => this.onNextTrack());
     this.onPlay();
     this.firstTime   = true;
+    this._playerService.audio.addEventListener("timeupdate", ()=>this.updateProgress());
+    this.myTime="0.000";
   }
+
+  updateProgress(){
+      console.log("B "+this._playerService.audio.currentTime);
+      let x=this._playerService.audio.currentTime.toString();
+      let y=this.myTime;
+      let z=x.indexOf('.');
+      console.log('Index: '+z);
+      console.log('Input: '+x);
+      x=x.substr(0,z );
+      console.log('Output: ' +x);
+      y=y.substr(0,z );
+      if (x!=y){
+      this.myTime=(this._playerService.audio.currentTime.toString().substr(0,4));
+      }
+    }
 }
 
